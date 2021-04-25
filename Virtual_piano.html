@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual_piano</title>
+    <script>
+        var dict = {
+            '1': 'sa',
+            '2': 're',
+            '3': 'ga',
+            '4': 'ma',
+            '5': 'pa',
+            '6': 'dha',
+            '7': 'ni',
+            '8': 'saa',
+            '9': 'ree'
+        }
+        function select_button(id) {
+            document.getElementById(id).style.border = "5px solid black";
+
+        }
+        function play_sound(note) {
+            var audio = new Audio('sounds/' + note + '.mp3');
+            audio.play()
+        }
+        function unselect_button(id) {
+            console.log(typeof(id))
+            document.getElementById(id).style.border = "1px solid black";
+        }
+        function pressed(note,id){
+            play_sound(note)
+            select_button(id)
+            setTimeout(function () {
+                unselect_button(id)
+            }, 300);
+        }
+
+        document.onkeydown = function (keyboard_note) {
+            if (keyboard_note.key in dict) {
+                play_sound(dict[keyboard_note.key])
+                select_button(keyboard_note.key)
+
+            }
+        }
+        document.onkeyup = function (keyboard_note) {
+            if (keyboard_note.key in dict) {
+                unselect_button(keyboard_note.key);
+            }
+        }
+
+    </script>
+
+    <style>
+        #musical_instruments {
+            padding: 5%;
+            padding-left: 25%;
+            padding-right: 25%;
+            height: 100vh;
+            border: 2px solid black;
+            background-color: peachpuff;
+        }
+
+        .small_button {
+            background-color: rgb(77, 74, 74);
+            height: 25%;
+            width: 50px;
+            position: absolute;
+            border: 1px solid black;
+        }
+
+        .large_button {
+            background-color: white;
+            height: 50%;
+            width: 100px;
+            border: 1px solid black;
+        }
+    </style>
+
+<body>
+    <div id="musical_instruments">
+        <button class="small_button" id='1' onclick="pressed('sa',id)"></button>
+        <button class="large_button" id='2' onclick="pressed('re',id)"></button>
+        <button class="large_button" id='3' onclick="pressed('ga',id)"></button>
+        <button class="small_button" id='4' onclick="pressed('ma',id)"></button>
+        <button class="large_button" id='5' onclick="pressed('pa',id)"></button>
+        <button class="large_button" id='6' onclick="pressed('dha',id)"></button>
+        <button class="large_button" id='7' onclick="pressed('ni',id)"></button>
+        <button class="small_button" id='8' onclick="pressed('saa',id)"></button>
+        <button class="large_button" id='9' onclick="pressed('ree',id)"></button>
+    </div>
+</body>
